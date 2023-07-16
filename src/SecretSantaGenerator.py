@@ -32,7 +32,10 @@ class SecretSantaGenerator:
             s[b].add(a)
 
         most_painfull_gifters = [x[0] for x in sorted(s.items(), key=lambda x: len(x[1]), reverse=True)]
-        for p in most_painfull_gifters:
+
+        i = 0
+        while i < len(most_painfull_gifters):
+            p = most_painfull_gifters[i]
             available = people_set ^ (s[p] | gifted)
             # reset if receivers is empty because dead end
             receivers = random.sample(available, 1)
@@ -40,4 +43,6 @@ class SecretSantaGenerator:
             self.pairs.append((p, receivers[0]))
             gifted.add(receivers[0])
             s[receivers[0]].add(p)
+
+            i += 1
 
