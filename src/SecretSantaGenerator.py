@@ -6,9 +6,16 @@ class SecretSantaGenerator:
     couples = []
     pairs = []
 
-    def __init__(self, people, couples):
-        self.people = people
-        self.couples = couples
+    def __init__(self, people=None, couples=None):
+        self.pairs = []
+        if people is None:
+            self.people = []
+        else:
+            self.people = people
+        if couples is None:
+            self.couples = []
+        else:
+            self.couples = couples
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}:\n people={self.people},\n couple={self.couples},\n pairs={self.pairs}\n"
