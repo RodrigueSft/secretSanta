@@ -37,7 +37,17 @@ class SecretSantaGenerator:
         while i < len(most_painfull_gifters):
             p = most_painfull_gifters[i]
             available = people_set ^ (s[p] | gifted)
-            # reset if receivers is empty because dead end
+
+            if len(available) <= 0:
+                if i <= 0:
+                    print("Secret santa not possible")
+                    return
+                i -=1
+                removed_pair = self.pairs.pop()
+                gifted.remove(removed_pair[1])
+                s[removed_pair[1]].remove(removed_pair[0])
+                continue
+
             receivers = random.sample(available, 1)
 
             self.pairs.append((p, receivers[0]))
