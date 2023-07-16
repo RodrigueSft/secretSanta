@@ -31,6 +31,14 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.secret_santa_validator(people, couples, santa_generator.pairs), True)
 
+    def test_generate_secret_santa_2(self):
+        people = ["Bastien", "Jessica", "Coline", "Emilien", "Ambroise", "Florent"]
+        couples = [("Florent", "Jessica"), ("Coline", "Emilien"), ("Florent", "Ambroise"), ("Florent", "Bastien")]
+        santa_generator = SecretSantaGenerator(people, couples)
+        santa_generator.generate()
+
+        self.assertEqual(self.secret_santa_validator(people, couples, santa_generator.pairs), True)
+
 
     @staticmethod
     def secret_santa_validator(people, couples, pairs):
