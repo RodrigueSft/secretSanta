@@ -6,6 +6,8 @@ class SecretSantaGenerator:
     couples = []
     pairs = []
 
+    TRY_ALLOWED = 5
+
     def __init__(self, people=None, couples=None):
         self.pairs = []
         if people is None:
@@ -34,6 +36,8 @@ class SecretSantaGenerator:
         most_painfull_gifters = [x[0] for x in sorted(s.items(), key=lambda x: len(x[1]), reverse=True)]
 
         i = 0
+        tmp = -1
+        nb_try = 0
         while i < len(most_painfull_gifters):
             p = most_painfull_gifters[i]
             available = people_set ^ (s[p] | gifted)
@@ -42,6 +46,19 @@ class SecretSantaGenerator:
                 if i <= 0:
                     print("Secret santa not possible")
                     return
+
+                if tmp == i:
+                    nb_try += 1
+                else:
+                    tmp = i
+
+                if nb_try >= self.TRY_ALLOWED:
+                    nb_try = 0
+                    i -= 1
+                    removed_pair = self.pairs.pop()
+                    gifted.remove(removed_pair[1])
+                    s[removed_pair[1]].remove(removed_pair[0])
+
                 i -=1
                 removed_pair = self.pairs.pop()
                 gifted.remove(removed_pair[1])
