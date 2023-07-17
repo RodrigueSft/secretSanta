@@ -38,6 +38,15 @@ class SecretSantaGenerator:
         i = 0
         tmp = -1
         nb_try = 0
+
+        def call_back_santa():
+            nonlocal i
+            i -= 1
+            removed_pair = self.pairs.pop()
+            print(f"removed_pair: {removed_pair}")
+            gifted.remove(removed_pair[1])
+            s[removed_pair[1]].remove(removed_pair[0])
+
         while i < len(most_painfull_gifters):
             p = most_painfull_gifters[i]
             available = people_set ^ (s[p] | gifted)
@@ -54,15 +63,9 @@ class SecretSantaGenerator:
 
                 if nb_try >= self.TRY_ALLOWED:
                     nb_try = 0
-                    i -= 1
-                    removed_pair = self.pairs.pop()
-                    gifted.remove(removed_pair[1])
-                    s[removed_pair[1]].remove(removed_pair[0])
+                    call_back_santa()
 
-                i -=1
-                removed_pair = self.pairs.pop()
-                gifted.remove(removed_pair[1])
-                s[removed_pair[1]].remove(removed_pair[0])
+                call_back_santa()
                 continue
 
             receivers = random.sample(available, 1)
